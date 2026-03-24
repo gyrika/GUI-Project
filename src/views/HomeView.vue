@@ -1,8 +1,63 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+import ProductGrid from '@/components/ProductGrid.vue'
+import { useProducts } from '@/composables/useProducts'
+
+const { products, loading, error, loadProducts } = useProducts()
+
+onMounted(() => {
+  void loadProducts()
+})
+</script>
+
 <template>
-  <section class="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 text-center">
-    <p class="text-sm font-medium uppercase tracking-[0.35em] text-slate-500">Minimal starter</p>
-    <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
-      Vue 3 SPA with Vite, TypeScript, Tailwind, and Bun
-    </h1>
+  <section class="mx-auto w-full max-w-6xl space-y-10">
+    <header class="space-y-4 text-center">
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">DummyJSON products</p>
+      <h1 class="text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+        Clean product listing starter
+      </h1>
+      <p class="mx-auto max-w-2xl text-base leading-7 text-slate-600">
+        A simple responsive catalog layout powered by Vue 3, TypeScript, Tailwind CSS, and Bun.
+      </p>
+    </header>
+
+    <div
+      v-if="loading"
+      class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+      aria-label="Loading products"
+    >
+      <div
+        v-for="item in 6"
+        :key="item"
+        class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+      >
+        <div class="aspect-[4/3] animate-pulse bg-slate-200" />
+        <div class="space-y-3 p-5">
+          <div class="h-3 w-24 animate-pulse rounded bg-slate-200" />
+          <div class="h-5 w-3/4 animate-pulse rounded bg-slate-200" />
+          <div class="h-6 w-20 animate-pulse rounded bg-slate-200" />
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-else-if="error"
+      class="rounded-2xl border border-red-200 bg-red-50 px-6 py-8 text-center text-red-700 shadow-sm"
+      role="alert"
+    >
+      <h2 class="text-lg font-semibold">Unable to load products</h2>
+      <p class="mt-2 text-sm">{{ error }}</p>
+      <button
+        class="mt-5 rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+        type="button"
+        @click="loadProducts"
+      >
+        Try again
+      </button>
+    </div>
+
+    <ProductGrid v-else :products="products" />
   </section>
 </template>
