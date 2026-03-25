@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
+
 import type { Product } from '@/types/product'
 
 defineProps<{
@@ -7,8 +9,9 @@ defineProps<{
 </script>
 
 <template>
-  <article
-    class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+  <RouterLink
+    :to="{ name: 'product-detail', params: { id: product.id } }"
+    class="block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
   >
     <div class="aspect-[4/3] bg-slate-100">
       <img
@@ -28,5 +31,5 @@ defineProps<{
       </h2>
       <p class="text-xl font-semibold text-slate-950">${{ product.price.toFixed(2) }}</p>
     </div>
-  </article>
+  </RouterLink>
 </template>
