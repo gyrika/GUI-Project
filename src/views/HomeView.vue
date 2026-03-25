@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import ProductGrid from '@/components/ProductGrid.vue'
+import SearchBar from '@/components/SearchBar.vue'
 import { useProducts } from '@/composables/useProducts'
 
 const { products, loading, error, loadProducts } = useProducts()
+const searchQuery = ref('')
+
+const filteredProducts = computed(() =>
+  products.value.filter((product) =>
+    product.title.toLowerCase().includes(searchQuery.value.trim().toLowerCase()),
+  ),
+)
 
 onMounted(() => {
   void loadProducts()
@@ -22,6 +30,10 @@ onMounted(() => {
         A simple responsive catalog layout powered by Vue 3, TypeScript, Tailwind CSS, and Bun.
       </p>
     </header>
+
+    <div class="mx-auto w-full max-w-xl">
+      <SearchBar v-model="searchQuery" />
+    </div>
 
     <div
       v-if="loading"
@@ -58,6 +70,11 @@ onMounted(() => {
       </button>
     </div>
 
-    <ProductGrid v-else :products="products" />
+    <div v-else-if="filteredProducts.length === 0" class="rounded-2xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm">
+      <h2 class="text-lg font-semibold text-slate-900">No products found</h2>
+      <p class="mt-2 text-sm text-slate-600">Try a different product title.</p>
+    </div>
+
+    <ProductGrid v-else :products="filteredProducts" />
   </section>
 </template>
