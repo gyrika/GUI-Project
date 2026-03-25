@@ -15,9 +15,6 @@ const router = createRouter({
       path: '/product/:id',
       name: 'product-detail',
       component: ProductDetailView,
-      props: (route) => ({
-        id: Number(route.params.id),
-      }),
     },
   ],
 })
