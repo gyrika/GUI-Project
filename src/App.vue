@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import AppNavbar from '@/components/AppNavbar.vue'
+import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
   <div class="min-h-screen bg-slate-100 text-slate-900">
-    <AppNavbar />
-    <main class="min-h-[calc(100vh-4rem)] px-6 py-10">
-      <RouterView />
-    </main>
+    <div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.9),_rgba(241,245,249,1)_55%)]">
+      <NavBar />
+      <main class="mx-auto w-full max-w-6xl px-5 py-8 sm:px-6 sm:py-10">
+        <RouterView />
+      </main>
+    </div>
   </div>
 </template>
