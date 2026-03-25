@@ -1,21 +1,41 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
+import CategoryFilter from '@/components/CategoryFilter.vue'
 import ProductGrid from '@/components/ProductGrid.vue'
 import SearchBar from '@/components/SearchBar.vue'
+import { fetchCategories } from '@/services/api'
 import { useProducts } from '@/composables/useProducts'
 
 const { products, loading, error, loadProducts } = useProducts()
+const categories = ref<string[]>(['All'])
+const selectedCategory = ref('All')
 const searchQuery = ref('')
 
-const filteredProducts = computed(() =>
-  products.value.filter((product) =>
-    product.title.toLowerCase().includes(searchQuery.value.trim().toLowerCase()),
-  ),
-)
+const filteredProducts = computed(() => {
+  const normalizedQuery = searchQuery.value.trim().toLowerCase()
+
+  return products.value.filter((product) => {
+    const matchesCategory =
+      selectedCategory.value === 'All' || product.category === selectedCategory.value
+    const matchesSearch = product.title.toLowerCase().includes(normalizedQuery)
+
+    return matchesCategory && matchesSearch
+  })
+})
+
+async function loadProductCategories(): Promise<void> {
+  try {
+    const response = await fetchCategories()
+    categories.value = ['All', ...response]
+  } catch {
+    categories.value = ['All']
+  }
+}
 
 onMounted(() => {
   void loadProducts()
+  void loadProductCategories()
 })
 </script>
 
@@ -31,8 +51,9 @@ onMounted(() => {
       </p>
     </header>
 
-    <div class="mx-auto w-full max-w-xl">
+    <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_240px] md:items-end">
       <SearchBar v-model="searchQuery" />
+      <CategoryFilter v-model="selectedCategory" :categories="categories" />
     </div>
 
     <div
@@ -72,7 +93,7 @@ onMounted(() => {
 
     <div v-else-if="filteredProducts.length === 0" class="rounded-2xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm">
       <h2 class="text-lg font-semibold text-slate-900">No products found</h2>
-      <p class="mt-2 text-sm text-slate-600">Try a different product title.</p>
+      <p class="mt-2 text-sm text-slate-600">Try a different search term or category.</p>
     </div>
 
     <ProductGrid v-else :products="filteredProducts" />
