@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
+    "pinia": "^3.0.4",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@tailwindcss/vite": "latest",
+    "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "latest",
     "tailwindcss": "latest",
     "typescript": "latest",
@@ -17,6 +19,6 @@
   },
   "scripts": {
     "dev": "bun x --bun vite",
-    "build": "bun x --bun vue-tsc -b && bun x --bun vite build"
+    "build": "bun x --bun vue-tsc --noEmit && bun x --bun vite build"
   }
 }

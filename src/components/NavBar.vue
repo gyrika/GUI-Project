@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
 </script>
 
 <template>
@@ -19,16 +23,13 @@ import { RouterLink } from 'vue-router'
         >
           Products
         </RouterLink>
-        <span
-          class="rounded-full border border-transparent px-4 py-2 text-sm font-medium text-slate-400"
+        <div
+          class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900"
+          aria-label="Shopping cart summary"
         >
-          Categories
-        </span>
-        <span
-          class="rounded-full border border-transparent px-4 py-2 text-sm font-medium text-slate-400"
-        >
-          Favorites
-        </span>
+          <p class="font-semibold">Cart {{ cartStore.totalItemCount }}</p>
+          <p class="text-xs text-emerald-700">${{ cartStore.totalPrice.toFixed(2) }}</p>
+        </div>
       </nav>
     </div>
   </header>

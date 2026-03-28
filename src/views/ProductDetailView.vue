@@ -3,9 +3,11 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 import { fetchProductById } from '@/services/api'
+import { useCartStore } from '@/stores/cart'
 import type { Product } from '@/types/product'
 
 const route = useRoute()
+const cartStore = useCartStore()
 const product = ref<Product | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
@@ -19,6 +21,21 @@ const productId = computed(() => {
 })
 
 const productImage = computed(() => product.value?.images[0] ?? product.value?.thumbnail ?? '')
+const isInCart = computed(() => {
+  if (!product.value) {
+    return false
+  }
+
+  return cartStore.items.some((item) => item.id === product.value.id)
+})
+
+function handleAddToCart(): void {
+  if (!product.value) {
+    return
+  }
+
+  cartStore.addToCart(product.value)
+}
 
 async function loadProduct(): Promise<void> {
   if (productId.value === null) {
@@ -120,6 +137,19 @@ onMounted(() => {
         </div>
 
         <p class="text-3xl font-semibold text-slate-950">${{ product.price.toFixed(2) }}</p>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button
+            class="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+            type="button"
+            @click="handleAddToCart"
+          >
+            Add to Cart
+          </button>
+          <p v-if="isInCart" class="text-sm text-slate-600">
+            This item is already in your cart. Add again to increase quantity.
+          </p>
+        </div>
 
         <div class="grid gap-3 sm:grid-cols-3">
           <div class="rounded-2xl bg-slate-50 p-4">
