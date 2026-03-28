@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 
 import type { Product } from '@/types/product'
@@ -13,8 +13,68 @@ export interface CartItem {
 
 type CartProduct = Pick<Product, 'id' | 'title' | 'price' | 'thumbnail'>
 
+const CART_STORAGE_KEY = 'cart-items'
+
+function isCartItem(value: unknown): value is CartItem {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+
+  const candidate = value as Record<string, unknown>
+
+  return (
+    typeof candidate.id === 'number' &&
+    typeof candidate.title === 'string' &&
+    typeof candidate.price === 'number' &&
+    typeof candidate.thumbnail === 'string' &&
+    typeof candidate.quantity === 'number' &&
+    Number.isInteger(candidate.quantity) &&
+    candidate.quantity > 0
+  )
+}
+
+function loadStoredCartItems(): CartItem[] {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
+  const storedValue = window.localStorage.getItem(CART_STORAGE_KEY)
+
+  if (!storedValue) {
+    return []
+  }
+
+  try {
+    const parsedValue: unknown = JSON.parse(storedValue)
+
+    if (!Array.isArray(parsedValue)) {
+      return []
+    }
+
+    return parsedValue.filter(isCartItem)
+  } catch {
+    return []
+  }
+}
+
+function saveCartItems(items: CartItem[]): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
+}
+
 export const useCartStore = defineStore('cart', () => {
-  const items = ref<CartItem[]>([])
+  const items = ref<CartItem[]>(loadStoredCartItems())
+
+  watch(
+    items,
+    (cartItems) => {
+      saveCartItems(cartItems)
+    },
+    { deep: true },
+  )
 
   const totalItemCount = computed(() =>
     items.value.reduce((count, item) => count + item.quantity, 0),
