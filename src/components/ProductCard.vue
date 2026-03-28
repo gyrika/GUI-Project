@@ -11,13 +11,13 @@ defineProps<{
 <template>
   <RouterLink
     :to="{ name: 'product-detail', params: { id: product.id } }"
-    class="block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:shadow-slate-950/20"
+    class="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:shadow-slate-950/20 dark:hover:border-slate-700"
   >
-    <div class="aspect-[4/3] bg-slate-100 dark:bg-slate-800">
+    <div class="aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800">
       <img
         :src="product.thumbnail"
         :alt="product.title"
-        class="h-full w-full object-cover"
+        class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
         loading="lazy"
       />
     </div>

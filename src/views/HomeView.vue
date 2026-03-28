@@ -24,6 +24,11 @@ const filteredProducts = computed(() => {
   })
 })
 
+function resetFilters(): void {
+  selectedCategory.value = 'All'
+  searchQuery.value = ''
+}
+
 async function loadProductCategories(): Promise<void> {
   try {
     const response = await fetchCategories()
@@ -40,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="mx-auto w-full max-w-6xl space-y-10">
+  <section class="mx-auto w-full max-w-6xl space-y-8 sm:space-y-10">
     <header class="space-y-4 text-center">
       <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">DummyJSON products</p>
       <h1 class="text-4xl font-semibold tracking-tight text-slate-950 dark:text-slate-50 sm:text-5xl">
@@ -51,14 +56,14 @@ onMounted(() => {
       </p>
     </header>
 
-    <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_240px] md:items-end">
+    <div class="grid gap-4 rounded-3xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-5 md:grid-cols-[minmax(0,1fr)_240px] md:items-end dark:border-slate-800 dark:bg-slate-900/80">
       <SearchBar v-model="searchQuery" />
       <CategoryFilter v-model="selectedCategory" :categories="categories" />
     </div>
 
     <div
       v-if="loading"
-      class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+      class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
       aria-label="Loading products"
     >
       <div
@@ -77,13 +82,13 @@ onMounted(() => {
 
     <div
       v-else-if="error"
-      class="rounded-2xl border border-red-200 bg-red-50 px-6 py-8 text-center text-red-700 shadow-sm dark:border-red-900 dark:bg-red-950/50 dark:text-red-200"
+      class="rounded-3xl border border-red-200 bg-red-50 px-6 py-10 text-center text-red-700 shadow-sm dark:border-red-900 dark:bg-red-950/50 dark:text-red-200"
       role="alert"
     >
-      <h2 class="text-lg font-semibold">Unable to load products</h2>
-      <p class="mt-2 text-sm">{{ error }}</p>
+      <h2 class="text-xl font-semibold">Unable to load products</h2>
+      <p class="mx-auto mt-2 max-w-xl text-sm leading-6">{{ error }}</p>
       <button
-        class="mt-5 rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-300"
+        class="mt-6 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-300"
         type="button"
         @click="loadProducts"
       >
@@ -91,9 +96,18 @@ onMounted(() => {
       </button>
     </div>
 
-    <div v-else-if="filteredProducts.length === 0" class="rounded-2xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">No products found</h2>
-      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Try a different search term or category.</p>
+    <div v-else-if="filteredProducts.length === 0" class="rounded-3xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">No products found</h2>
+      <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">
+        Try a different search term or category, or reset the filters to see everything again.
+      </p>
+      <button
+        class="mt-6 rounded-full border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:bg-slate-700"
+        type="button"
+        @click="resetFilters"
+      >
+        Reset filters
+      </button>
     </div>
 
     <ProductGrid v-else :products="filteredProducts" />

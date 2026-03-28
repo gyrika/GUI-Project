@@ -21,7 +21,7 @@ function handleRemove(productId: CartItem['id']): void {
 
 <template>
   <section class="mx-auto w-full max-w-6xl space-y-6">
-    <header class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-end sm:justify-between dark:border-slate-800 dark:bg-slate-900">
+    <header class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 sm:flex-row sm:items-end sm:justify-between dark:border-slate-800 dark:bg-slate-900">
       <div class="space-y-2">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Shopping cart</p>
         <h1 class="text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50 sm:text-4xl">Your selected items</h1>
@@ -53,12 +53,12 @@ function handleRemove(productId: CartItem['id']): void {
       </RouterLink>
     </div>
 
-    <div v-else class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div v-else class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
       <section class="space-y-4">
         <article
           v-for="item in cartStore.items"
           :key="item.id"
-          class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:p-5 dark:border-slate-800 dark:bg-slate-900"
+          class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:gap-5 sm:p-5 dark:border-slate-800 dark:bg-slate-900"
         >
           <div class="h-28 w-full overflow-hidden rounded-2xl bg-slate-100 sm:w-28 sm:flex-none dark:bg-slate-800">
             <img
@@ -98,7 +98,7 @@ function handleRemove(productId: CartItem['id']): void {
                 </button>
               </div>
 
-              <div class="flex items-center gap-3">
+              <div class="flex flex-wrap items-center gap-3 sm:justify-end">
                 <p class="text-base font-semibold text-slate-950 dark:text-slate-50">
                   ${{ (item.price * item.quantity).toFixed(2) }}
                 </p>
@@ -115,7 +115,7 @@ function handleRemove(productId: CartItem['id']): void {
         </article>
       </section>
 
-      <aside class="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <aside class="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:sticky lg:top-24 dark:border-slate-800 dark:bg-slate-900">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Order summary</p>
         <div class="mt-6 space-y-4">
           <div class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-300">

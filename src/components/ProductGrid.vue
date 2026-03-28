@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <section class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+  <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
     <ProductCard v-for="product in products" :key="product.id" :product="product" />
   </section>
 </template>
