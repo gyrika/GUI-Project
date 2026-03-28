@@ -1,14 +1,23 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: "Segoe UI", sans-serif;
   color: #0f172a;
   background: #f1f5f9;
+  color-scheme: light;
+}
+
+:root.dark {
+  color: #e2e8f0;
+  background: #020617;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 a {
@@ -18,4 +27,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+#app {
+  min-height: 100vh;
 }
