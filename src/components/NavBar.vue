@@ -23,13 +23,14 @@ const cartStore = useCartStore()
         >
           Products
         </RouterLink>
-        <div
-          class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900"
+        <RouterLink
+          class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900 transition hover:border-emerald-300 hover:bg-emerald-100"
+          to="/cart"
           aria-label="Shopping cart summary"
         >
-          <p class="font-semibold">Cart {{ cartStore.totalItemCount }}</p>
+          <p class="font-semibold">Cart ({{ cartStore.totalItemCount }})</p>
           <p class="text-xs text-emerald-700">${{ cartStore.totalPrice.toFixed(2) }}</p>
-        </div>
+        </RouterLink>
       </nav>
     </div>
   </header>
