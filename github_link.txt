@@ -1,0 +1,5 @@
+CS3404: GUI Programming - Mini Project
+Name: CROOS W.G.C.M
+Registration Number: EG/2023/5540
+
+GitHub Repository: https://github.com/gyrika/GUI-Project

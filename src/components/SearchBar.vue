@@ -20,13 +20,16 @@ function handleInput(event: Event): void {
 
 <template>
   <label class="block space-y-2">
-    <span class="mb-2 block text-sm font-medium text-slate-600 dark:text-slate-300">Search products</span>
-    <input
-      :value="modelValue"
-      class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:ring-2 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-slate-500 dark:focus:ring-slate-800"
-      placeholder="Search by product title"
-      type="search"
-      @input="handleInput"
-    />
+    <span class="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-stone-500 dark:text-stone-300">Search the edit</span>
+    <span class="relative block">
+      <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m20 20-4.35-4.35" /></svg>
+      <input
+        :value="modelValue"
+        class="w-full rounded-2xl border border-stone-200 bg-stone-50 px-11 py-3.5 text-sm font-medium text-slate-900 shadow-sm outline-none transition placeholder:font-normal placeholder:text-stone-400 focus:border-amber-400 focus:bg-white focus:ring-4 focus:ring-amber-100 dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100 dark:placeholder:text-stone-500 dark:focus:border-amber-300 dark:focus:bg-stone-900 dark:focus:ring-amber-300/10"
+        placeholder="Search products, brands, and more"
+        type="search"
+        @input="handleInput"
+      />
+    </span>
   </label>
 </template>

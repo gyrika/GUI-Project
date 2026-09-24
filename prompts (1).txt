@@ -1,0 +1,44 @@
+The aim 01: Set up a Vue 3 + TypeScript project using Bun with Vite and Tailwind CSS v4 correctly configured.
+Actual prompt: I want to start a Vue 3 project with TypeScript using Bun instead of npm. Give me the commands to scaffold it with Vite, then show me how to install Tailwind CSS v4 using the @tailwindcss/vite plugin. Also set up an "@" path alias that points to /src in both vite.config.ts and tsconfig.app.json, and make sure "strict": true is enabled.
+
+The aim 02: Generate strict TypeScript interfaces for the DummyJSON products API so no "any" types are needed.
+Actual prompt: Here is a sample JSON response from https://dummyjson.com/products/1 [pasted JSON]. Generate strict TypeScript interfaces for it. Split the nested objects (dimensions, reviews, meta) into their own interfaces, and also create a ProductsResponse interface for the /products list endpoint which has products, total, skip and limit. Do not use "any" or optional fields unless the API can actually omit them.
+
+The aim 03: Create a reusable, typed API service layer instead of calling fetch directly inside components.
+Actual prompt: Write a services/api.ts file for my Vue + TypeScript app that talks to https://dummyjson.com. I want one generic helper request<T>(path: string): Promise<T> that throws an Error with the response text if response.ok is false. Then export three typed functions: fetchProducts(): Promise<ProductsResponse>, fetchProductById(id: number): Promise<Product>, and fetchCategories(): Promise<string[]> using /products/category-list.
+
+The aim 04: Move loading and error handling logic out of the view into a composable.
+Actual prompt: I have a fetchProducts() function. Write a Vue 3 Composition API composable called useProducts() that returns products (ref<Product[]>), loading (ref<boolean>), error (ref<string | null>) and a loadProducts() function. In the catch block, type the error as unknown and narrow it with instanceof Error instead of using "any".
+
+The aim 05: Display products in a responsive Tailwind grid with loading skeletons and an error state.
+Actual prompt: Give me Tailwind CSS classes for a product card grid that shows 1 column on mobile, 2 columns from the sm breakpoint and 3 columns from xl. The card should have a 4:3 thumbnail image, category label, title clamped to 2 lines and a price. Also give me a skeleton loading card using animate-pulse that matches the same layout, and support dark mode with dark: classes.
+
+The aim 06: Build a responsive navigation bar and a clean application shell layout.
+Actual prompt: Create Tailwind classes for a Vue NavBar component. On mobile the brand and links should stack vertically and be centred, and from the lg breakpoint the brand should be on the left with links on the right in one row. Use a translucent white background with backdrop blur and a bottom border. Keep the main content in a centred max-w-6xl container.
+
+The aim 07: Implement live search by product title using v-model on a reusable SearchBar component.
+Actual prompt: I want a SearchBar.vue component that works with v-model in Vue 3 script setup with TypeScript. Show me how to type defineProps for modelValue and defineEmits for 'update:modelValue' using the tuple syntax. In the input handler, how do I get the value without casting event.target with "as"? I want to narrow it with instanceof HTMLInputElement.
+
+The aim 08: Add a category filter that works together with the search.
+Actual prompt: In my HomeView I have products, a searchQuery ref and a selectedCategory ref where "All" means no filter. Review my computed filteredProducts logic below and tell me if it correctly handles case-insensitive search, extra spaces in the query and the "All" category. Also suggest what to show when no products match. [pasted computed code]
+
+The aim 09: Configure Vue Router with named routes, including a dynamic product detail route.
+Actual prompt: Explain how to set up Vue Router 4 with createWebHistory for three routes: "/" (home), "/product/:id" (product-detail) and "/cart". How do I link to the detail page from ProductCard using the named route and params instead of building the URL string by hand?
+
+The aim 10: Build the product detail page and make it refetch correctly when the id in the URL changes.
+Actual prompt: My ProductDetailView loads the product in onMounted, but when I navigate from one product to another the old product stays on screen. Why does this happen with Vue Router? Also route.params.id is typed as string | string[]; what is a safe way to convert it to a positive integer and show an "Invalid product id" error otherwise?
+
+The aim 11: Create a typed global shopping cart store with Pinia.
+Actual prompt: Help me design a Pinia setup store (defineStore with a function) for a shopping cart in TypeScript. A CartItem should only store id, title, price, thumbnail and quantity. Instead of repeating the types, how can I derive them from my existing Product interface? I need addToCart, removeFromCart, incrementQuantity, decrementQuantity (remove when quantity reaches 0), clearCart, and computed totalItemCount and totalPrice.
+
+The aim 12: Persist the cart across page reloads using localStorage without trusting the stored data blindly.
+Actual prompt: I want my Pinia cart to save to localStorage whenever it changes and load it back on startup. If someone edits localStorage manually and puts invalid data there, the app should not crash. How do I parse the JSON as unknown and write a type guard isCartItem(value: unknown): value is CartItem to filter out bad entries?
+
+The aim 13: Implement a persistent dark mode toggle using Tailwind's dark: modifier.
+Actual prompt: In Tailwind CSS v4 the dark: variant follows the OS setting by default. How do I switch it to use a .dark class on the html element instead? Then help me write a useTheme() composable with a 'light' | 'dark' union type that saves the choice to localStorage, falls back to prefers-color-scheme on first visit, and is applied in main.ts before mounting so there is no flash of the wrong theme.
+
+The aim 14: Audit the finished code for type errors, accessibility issues and anything that would break the production build.
+Actual prompt: Run through my ProductDetailView.vue and check it for problems before submission. vue-tsc gives "error TS18047: 'product.value' is possibly 'null'" on the line cartStore.items.some((item) => item.id === product.value.id), even though I check if (!product.value) return false just above it. Why does TypeScript lose the narrowing here, and what is the cleanest fix? Also point out any missing aria-labels or focus styles in my buttons. [pasted component code]
+
+The aim 15: Plan and write the project report with a component hierarchy explanation.
+Actual prompt: what kind of report should we create [attached the mini project PDF], followed by: i made the site now i need the report https://github.com/gyrika/GUI-Project

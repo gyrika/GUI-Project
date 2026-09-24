@@ -8,29 +8,31 @@ const cartStore = useCartStore()
 </script>
 
 <template>
-  <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur transition-colors dark:border-slate-800 dark:bg-slate-950/90">
-    <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-      <div class="space-y-1 text-center sm:text-left">
-        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Bun + Vue 3</p>
-        <RouterLink class="text-xl font-semibold tracking-tight text-slate-950 transition hover:text-slate-700 dark:text-slate-50 dark:hover:text-slate-300" to="/">
-          Product Explorer
-        </RouterLink>
-      </div>
+  <header class="sticky top-0 z-20 border-b border-stone-200/80 bg-stone-50/85 backdrop-blur-xl transition-colors dark:border-stone-800 dark:bg-stone-950/85">
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+      <RouterLink class="group flex items-center justify-center gap-3 sm:justify-start" to="/">
+        <span class="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900 text-lg font-black text-amber-300 shadow-lg shadow-slate-900/20 transition group-hover:-rotate-6 group-hover:scale-105 dark:bg-amber-300 dark:text-slate-950">M</span>
+        <span class="text-left">
+          <span class="block text-lg font-bold tracking-tight text-slate-950 dark:text-stone-50">Morrow</span>
+          <span class="block text-[10px] font-bold uppercase tracking-[0.22em] text-stone-500 dark:text-stone-400">Considered goods</span>
+        </span>
+      </RouterLink>
 
-      <nav aria-label="Primary" class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+      <nav aria-label="Primary" class="flex items-center justify-center gap-2 sm:justify-end">
         <RouterLink
-          class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-center text-sm font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+          class="rounded-full px-3 py-2 text-center text-sm font-semibold text-stone-600 transition hover:bg-stone-200/70 hover:text-slate-950 dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-50 sm:px-4"
           to="/"
         >
           Products
         </RouterLink>
         <RouterLink
-          class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-center text-sm text-emerald-900 transition hover:border-emerald-300 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-100 dark:hover:border-emerald-700 dark:hover:bg-emerald-900/70"
+          class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-center text-sm text-white shadow-md shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-slate-700 dark:bg-amber-300 dark:text-slate-950 dark:hover:bg-amber-200"
           to="/cart"
           aria-label="Shopping cart summary"
         >
-          <p class="font-semibold">Cart ({{ cartStore.totalItemCount }})</p>
-          <p class="text-xs text-emerald-700 dark:text-emerald-300">${{ cartStore.totalPrice.toFixed(2) }}</p>
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13 5.4 5M7 13l-1.1 2.2A1 1 0 0 0 6.8 17H19M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM20 21a1 1 0 1 0 0-2 1 1 0 1 0 0 2Z" /></svg>
+          <span class="font-semibold">Cart</span>
+          <span class="grid h-5 min-w-5 place-items-center rounded-full bg-white/20 px-1 text-xs font-bold dark:bg-slate-950/15">{{ cartStore.totalItemCount }}</span>
         </RouterLink>
         <ThemeToggle />
       </nav>

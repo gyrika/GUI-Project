@@ -45,20 +45,37 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="mx-auto w-full max-w-6xl space-y-8 sm:space-y-10">
-    <header class="space-y-4 text-center">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">DummyJSON products</p>
-      <h1 class="text-4xl font-semibold tracking-tight text-slate-950 dark:text-slate-50 sm:text-5xl">
-        Clean product listing starter
-      </h1>
-      <p class="mx-auto max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
-        A simple responsive catalog layout powered by Vue 3, TypeScript, Tailwind CSS, and Bun.
-      </p>
+  <section class="mx-auto w-full max-w-7xl space-y-7 sm:space-y-9">
+    <header class="relative isolate overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-10 text-center text-white shadow-xl shadow-slate-900/15 sm:px-10 sm:py-14">
+      <div class="absolute -left-16 top-0 -z-10 h-56 w-56 rounded-full bg-amber-300/20 blur-3xl" />
+      <div class="absolute -right-12 bottom-0 -z-10 h-64 w-64 rounded-full bg-emerald-300/15 blur-3xl" />
+      <div class="mx-auto max-w-3xl space-y-5">
+        <p class="text-xs font-bold uppercase tracking-[0.32em] text-amber-300">The everyday edit</p>
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Good things, found well.</h1>
+        <p class="mx-auto max-w-2xl text-base leading-7 text-stone-300 sm:text-lg">
+          Explore a considered collection of useful, joyful, and beautifully made products.
+        </p>
+        <div class="flex flex-wrap justify-center gap-2 pt-2 text-xs font-semibold text-stone-200">
+          <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">Curated daily</span>
+          <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">Easy returns</span>
+          <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5">Fresh finds</span>
+        </div>
+      </div>
     </header>
 
-    <div class="grid gap-4 rounded-3xl border border-slate-200/80 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-5 md:grid-cols-[minmax(0,1fr)_240px] md:items-end dark:border-slate-800 dark:bg-slate-900/80">
+    <div class="grid gap-4 rounded-3xl border border-stone-200 bg-white/85 p-4 shadow-lg shadow-stone-900/[0.04] backdrop-blur sm:p-5 md:grid-cols-[minmax(0,1fr)_240px] md:items-end dark:border-stone-800 dark:bg-stone-900/85">
       <SearchBar v-model="searchQuery" />
       <CategoryFilter v-model="selectedCategory" :categories="categories" />
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 px-1">
+      <p class="text-sm font-medium text-stone-600 dark:text-stone-300">
+        <span class="font-bold text-slate-950 dark:text-stone-50">{{ filteredProducts.length }}</span>
+        {{ filteredProducts.length === 1 ? 'piece' : 'pieces' }} in the current edit
+      </p>
+      <p class="inline-flex items-center gap-2 text-xs font-semibold text-stone-500 dark:text-stone-400">
+        <span class="h-2 w-2 rounded-full bg-emerald-500" /> New arrivals, ready to discover
+      </p>
     </div>
 
     <div
@@ -69,13 +86,13 @@ onMounted(() => {
       <div
         v-for="item in 6"
         :key="item"
-        class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm dark:border-stone-800 dark:bg-stone-900"
       >
-        <div class="aspect-[4/3] animate-pulse bg-slate-200 dark:bg-slate-800" />
+        <div class="aspect-[4/3] animate-pulse bg-stone-200 dark:bg-stone-800" />
         <div class="space-y-3 p-5">
-          <div class="h-3 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-          <div class="h-5 w-3/4 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-          <div class="h-6 w-20 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+          <div class="h-3 w-24 animate-pulse rounded bg-stone-200 dark:bg-stone-800" />
+          <div class="h-5 w-3/4 animate-pulse rounded bg-stone-200 dark:bg-stone-800" />
+          <div class="h-6 w-20 animate-pulse rounded bg-stone-200 dark:bg-stone-800" />
         </div>
       </div>
     </div>
@@ -88,7 +105,7 @@ onMounted(() => {
       <h2 class="text-xl font-semibold">Unable to load products</h2>
       <p class="mx-auto mt-2 max-w-xl text-sm leading-6">{{ error }}</p>
       <button
-        class="mt-6 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-slate-300"
+        class="mt-6 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-amber-300 dark:text-slate-950 dark:hover:bg-amber-200"
         type="button"
         @click="loadProducts"
       >
@@ -96,13 +113,13 @@ onMounted(() => {
       </button>
     </div>
 
-    <div v-else-if="filteredProducts.length === 0" class="rounded-3xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">No products found</h2>
-      <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">
+    <div v-else-if="filteredProducts.length === 0" class="rounded-3xl border border-stone-200 bg-white px-6 py-12 text-center shadow-sm dark:border-stone-800 dark:bg-stone-900">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-stone-100">No products found</h2>
+      <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-stone-600 dark:text-stone-300">
         Try a different search term or category, or reset the filters to see everything again.
       </p>
       <button
-        class="mt-6 rounded-full border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:bg-slate-700"
+        class="mt-6 rounded-full border border-stone-200 bg-stone-50 px-5 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:bg-stone-100 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 dark:hover:border-stone-600 dark:hover:bg-stone-700"
         type="button"
         @click="resetFilters"
       >

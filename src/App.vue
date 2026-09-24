@@ -3,10 +3,10 @@ import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
-    <div class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.9),_rgba(241,245,249,1)_55%)] transition-colors dark:bg-[radial-gradient(circle_at_top,_rgba(30,41,59,0.75),_rgba(2,6,23,1)_55%)]">
+  <div class="min-h-screen bg-stone-50 text-slate-900 transition-colors dark:bg-stone-950 dark:text-stone-100">
+    <div class="min-h-screen bg-[radial-gradient(circle_at_50%_-20%,_rgba(254,215,170,0.5),_transparent_34%),radial-gradient(circle_at_100%_25%,_rgba(187,247,208,0.35),_transparent_24%)] transition-colors dark:bg-[radial-gradient(circle_at_50%_-20%,_rgba(120,113,108,0.22),_transparent_34%)]">
       <NavBar />
-      <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
+      <main class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-10">
         <RouterView />
       </main>
     </div>
